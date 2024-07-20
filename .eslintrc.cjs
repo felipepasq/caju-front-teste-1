@@ -34,4 +34,4 @@ module.exports = {
     'no-undef': 'off',
     'prettier/prettier': 'error',
   },
-};
+}

@@ -1,7 +1,7 @@
-import Router from "~/router";
-import { Header } from "./components/Header";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "./utils/queryClient";
+import Router from '~/router'
+import { Header } from './components/Header'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from './utils/queryClient'
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       </Header>
       <Router />
     </QueryClientProvider>
-  );
+  )
 }
 
-export default App;
+export default App
