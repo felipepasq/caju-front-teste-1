@@ -1,4 +1,4 @@
-export type TRegister = {
+export type TRegistration = {
   admissionDate: string
   cpf: string
   email: string

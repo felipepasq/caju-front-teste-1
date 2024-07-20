@@ -1,16 +1,24 @@
-import Collumns from './components/Columns'
+import Columns from './components/Columns'
 import * as S from './styles'
 import { SearchBar } from './components/Searchbar'
-import { useGetRegisters } from '~/hooks'
+import { useGetRegistrations } from '~/hooks'
+import { useState } from 'react'
 
 const DashboardPage = () => {
-  const { registers } = useGetRegisters()
-  console.log(registers)
+  const [search, setSearch] = useState('')
+
+  const { registrations } = useGetRegistrations(search)
+
+  const handleSearch = (search: string) => {
+    if (search.length === 11 || search.length === 0) {
+      setSearch(search)
+    }
+  }
 
   return (
     <S.Container>
-      <SearchBar />
-      <Collumns registrations={registers} />
+      <SearchBar handleSearch={handleSearch} />
+      <Columns registrations={registrations} />
     </S.Container>
   )
 }

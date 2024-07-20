@@ -1,6 +1,6 @@
 import * as S from './styles'
 import RegistrationCard from '../RegistrationCard'
-import { TRegister } from '~/types'
+import { TRegistration } from '~/types'
 
 const allColumns = [
   { status: 'REVIEW', title: 'Pronto para revisar' },
@@ -9,28 +9,29 @@ const allColumns = [
 ]
 
 type Props = {
-  registrations?: TRegister[]
+  registrations?: TRegistration[]
 }
-const Collumns = (props: Props) => {
+const Columns = ({ registrations }: Props) => {
   return (
     <S.Container>
-      {allColumns.map((collum) => {
+      {allColumns.map((column) => {
         return (
-          <S.Column status={collum.status} key={collum.title}>
+          <S.Column status={column.status} key={column.title}>
             <>
-              <S.TitleColumn status={collum.status}>
-                {collum.title}
+              <S.TitleColumn status={column.status}>
+                {column.title}
               </S.TitleColumn>
-              <S.CollumContent>
-                {props?.registrations?.map((registration) => {
-                  return (
-                    <RegistrationCard
-                      data={registration}
-                      key={registration.id}
-                    />
-                  )
-                })}
-              </S.CollumContent>
+              <S.ColumnContent>
+                {registrations?.map(
+                  (registration) =>
+                    registration.status === column.status && (
+                      <RegistrationCard
+                        registration={registration}
+                        key={registration.id}
+                      />
+                    ),
+                )}
+              </S.ColumnContent>
             </>
           </S.Column>
         )
@@ -38,4 +39,4 @@ const Collumns = (props: Props) => {
     </S.Container>
   )
 }
-export default Collumns
+export default Columns
