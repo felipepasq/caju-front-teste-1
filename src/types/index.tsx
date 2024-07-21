@@ -4,5 +4,5 @@ export type TRegistration = {
   email: string
   employeeName: string
   id: string
-  status: 'REPROVED' | 'REVIEW' | 'APROVED'
+  status: 'REPROVED' | 'REVIEW' | 'APPROVED'
 }

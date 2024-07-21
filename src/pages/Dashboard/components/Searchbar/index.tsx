@@ -1,13 +1,14 @@
 import { HiRefresh } from 'react-icons/hi'
 import { useHistory } from 'react-router-dom'
-import Button from '~/components/Buttons'
-import { IconButton } from '~/components/Buttons/IconButton'
+
+import { IconButton, Button } from '~/components'
 import TextField from '~/components/TextField'
 import routes from '~/router/routes'
 import * as S from './styles'
 
 type Props = {
   handleSearch: (search: string) => void
+  search: string
 }
 
 export const SearchBar = ({ handleSearch }: Props) => {

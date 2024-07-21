@@ -1,1 +1,1 @@
-export * from './useGetRegisters'
+export * from './useGetRegistrations'

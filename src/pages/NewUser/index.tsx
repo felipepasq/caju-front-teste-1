@@ -1,15 +1,65 @@
 import TextField from '~/components/TextField'
 import * as S from './styles'
-import Button from '~/components/Buttons'
+import { IconButton, Button, AlertDialog } from '~/components'
 import { HiOutlineArrowLeft } from 'react-icons/hi'
-import { IconButton } from '~/components/Buttons/IconButton'
 import { useHistory } from 'react-router-dom'
 import routes from '~/router/routes'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FormData, schema } from './schema'
+import { useEffect, useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { postRegistration } from '~/services'
+import { TRegistration } from '~/types'
+import { maskCpf, removeCpfMask } from '~/utils'
+import { v4 as uuidv4 } from 'uuid'
+import { format } from 'date-fns'
 
-const NewUserPage = () => {
+export const NewUserPage = () => {
   const history = useHistory()
+  const [isAlertOpen, setIsAlertOpen] = useState(false)
+  const queryClient = useQueryClient()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    watch,
+    setValue,
+  } = useForm<FormData>({ resolver: zodResolver(schema) })
+
   const goToHome = () => {
     history.push(routes.dashboard)
+  }
+
+  const watchCpf = watch('cpf')
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: (newRegistration: TRegistration) => {
+      return postRegistration(newRegistration)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['registrations'],
+        refetchType: 'all',
+      })
+      goToHome()
+    },
+  })
+
+  useEffect(() => {
+    setValue('cpf', maskCpf(watchCpf))
+  }, [watchCpf, setValue])
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    const { cpf, date, email, name } = data
+    mutate({
+      id: uuidv4(),
+      employeeName: name,
+      email,
+      cpf: removeCpfMask(cpf),
+      admissionDate: format(date, 'dd/MM/yyyy'),
+      status: 'REVIEW',
+    })
   }
 
   return (
@@ -18,14 +68,61 @@ const NewUserPage = () => {
         <IconButton onClick={() => goToHome()} aria-label="back">
           <HiOutlineArrowLeft size={24} />
         </IconButton>
-        <TextField placeholder="Nome" label="Nome" />
-        <TextField placeholder="Email" label="Email" type="email" />
-        <TextField placeholder="CPF" label="CPF" />
-        <TextField label="Data de admissão" type="date" />
-        <Button onClick={() => {}}>Cadastrar</Button>
+        <S.Form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <TextField
+            placeholder="Nome"
+            label="Nome"
+            error={errors.name?.message}
+            {...register('name')}
+          />
+          <TextField
+            placeholder="Email"
+            label="Email"
+            type="email"
+            error={errors.email?.message}
+            {...register('email')}
+          />
+          <TextField
+            placeholder="CPF"
+            label="CPF"
+            error={errors.cpf?.message}
+            {...register('cpf')}
+          />
+          <TextField
+            label="Data de admissão"
+            type="date"
+            error={errors.date?.message}
+            {...register('date')}
+          />
+          <AlertDialog.Root open={isAlertOpen} onOpenChange={setIsAlertOpen}>
+            <AlertDialog.Trigger asChild>
+              <Button
+                disabled={isPending || !isValid}
+                onClick={() => setIsAlertOpen(true)}
+              >
+                {isPending ? 'Carregando...' : 'Cadastrar'}
+              </Button>
+            </AlertDialog.Trigger>
+            <AlertDialog.Portal>
+              <AlertDialog.Overlay />
+              <AlertDialog.Content>
+                <AlertDialog.Title>Você tem certeza ?</AlertDialog.Title>
+                <AlertDialog.Description>
+                  Essa ação vai adicionar um novo usúario
+                </AlertDialog.Description>
+                <S.buttonContainer>
+                  <AlertDialog.Cancel asChild>
+                    <button>Cancelar</button>
+                  </AlertDialog.Cancel>
+                  <AlertDialog.Action asChild>
+                    <button>Confirmar</button>
+                  </AlertDialog.Action>
+                </S.buttonContainer>
+              </AlertDialog.Content>
+            </AlertDialog.Portal>
+          </AlertDialog.Root>
+        </S.Form>
       </S.Card>
     </S.Container>
   )
 }
-
-export default NewUserPage

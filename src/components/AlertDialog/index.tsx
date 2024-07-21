@@ -6,6 +6,7 @@ import { Content } from './Content'
 import { Action } from './Action'
 import { Cancel } from './Cancel'
 import { Description } from './Description'
+import { Title } from './Title'
 
 export const AlertDialog = {
   Root,
@@ -16,4 +17,5 @@ export const AlertDialog = {
   Action,
   Cancel,
   Description,
+  Title,
 }

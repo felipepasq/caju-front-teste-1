@@ -1,11 +1,16 @@
 import styled from 'styled-components'
-import { _IconButtonStyled } from '~/components/Buttons/IconButton'
-import Button from '~/components/Buttons'
+import { _IconButtonStyled, Button } from '~/components'
 
 export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+`
+
+export const Form = styled.form`
+  display: flex;
   flex-direction: column;
   gap: 16px;
 `
@@ -26,4 +31,15 @@ export const Card = styled.div`
   ${Button} {
     align-self: flex-end;
   }
+
+  ${Button}:disabled {
+    background-color: #b2d3c9;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+`
+
+export const buttonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
 `
