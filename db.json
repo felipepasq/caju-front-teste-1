@@ -9,14 +9,6 @@
       "id": "3"
     },
     {
-      "id": "2",
-      "admissionDate": "22/10/2023",
-      "email": "jose@caju.com.br",
-      "employeeName": "José Leão",
-      "status": "REVIEW",
-      "cpf": "78502270001"
-    },
-    {
       "id": "88bc12e5-0b26-4150-83a6-7c72f9981f38",
       "employeeName": "teste final",
       "email": "arqgen@arqgen.com.br",
@@ -30,7 +22,7 @@
       "email": "felipepasqua2011@hotmail.com",
       "cpf": "81787694682",
       "admissionDate": "30/06/2024",
-      "status": "APPROVED"
+      "status": "REVIEW"
     },
     {
       "id": "90349c33-96cb-435f-b431-6a04a6b4c377",
