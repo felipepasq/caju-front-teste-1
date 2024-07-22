@@ -8,17 +8,17 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormData, schema } from './schema'
 import { useEffect, useState } from 'react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { postRegistration } from '~/services'
-import { TRegistration, RegistrationStatus } from '~/types'
+import { RegistrationStatus } from '~/types'
 import { maskCpf, removeCpfMask } from '~/utils'
 import { v4 as uuidv4 } from 'uuid'
 import { format } from 'date-fns'
+import { usePostRegistration } from '~/hooks/usePostRegistration'
 
 export const NewUserPage = () => {
   const history = useHistory()
   const [isAlertOpen, setIsAlertOpen] = useState(false)
-  const queryClient = useQueryClient()
+  const { postMutateRegistration, isPosting } = usePostRegistration()
+
   const {
     register,
     handleSubmit,
@@ -26,7 +26,7 @@ export const NewUserPage = () => {
     watch,
     setValue,
     trigger,
-  } = useForm<FormData>({ resolver: zodResolver(schema) })
+  } = useForm<FormData>({ resolver: zodResolver(schema), mode: 'onChange' })
 
   const goToHome = () => {
     history.push(routes.dashboard)
@@ -34,26 +34,13 @@ export const NewUserPage = () => {
 
   const watchCpf = watch('cpf')
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: (newRegistration: TRegistration) => {
-      return postRegistration(newRegistration)
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['registrations'],
-        refetchType: 'all',
-      })
-      goToHome()
-    },
-  })
-
   useEffect(() => {
     setValue('cpf', maskCpf(watchCpf))
   }, [watchCpf, setValue])
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const { cpf, date, email, name } = data
-    mutate({
+    postMutateRegistration({
       id: uuidv4(),
       employeeName: name,
       email,
@@ -108,8 +95,8 @@ export const NewUserPage = () => {
           />
           <AlertDialog.Root open={isAlertOpen && isValid}>
             <AlertDialog.Trigger asChild>
-              <Button disabled={isPending} onClick={handleOpenAlert}>
-                {isPending ? 'Carregando...' : 'Cadastrar'}
+              <Button disabled={isPosting} onClick={handleOpenAlert}>
+                {isPosting ? 'Carregando...' : 'Cadastrar'}
               </Button>
             </AlertDialog.Trigger>
             <AlertDialog.Portal>

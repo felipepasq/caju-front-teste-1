@@ -23,6 +23,14 @@
       "cpf": "14991091640",
       "admissionDate": "01/07/2024",
       "status": "REVIEW"
+    },
+    {
+      "id": "e5671462-d34a-4d31-8c27-4cf3c08abd32",
+      "employeeName": "Felipe Pasqua",
+      "email": "felipepasqua2011@hotmail.com",
+      "cpf": "81787694682",
+      "admissionDate": "30/06/2024",
+      "status": "REVIEW"
     }
   ]
 }

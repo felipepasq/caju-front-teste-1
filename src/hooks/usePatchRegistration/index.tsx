@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'react-toastify'
 import { patchRegistration } from '~/services'
 import { RegistrationStatus } from '~/types'
 
@@ -20,6 +21,10 @@ export const usePatchRegistration = () => {
           queryKey: ['registrations'],
           refetchType: 'all',
         })
+        toast.success('Estado do usuário atualizado com sucesso!')
+      },
+      onError: () => {
+        toast.error('Erro ao atualizar estado do usuário.')
       },
     })
 
