@@ -42,4 +42,10 @@ export const Card = styled.div`
 export const buttonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+  gap: 24px;
+
+  & > button {
+    font-weight: 700;
+    font-size: 14px;
+  }
 `

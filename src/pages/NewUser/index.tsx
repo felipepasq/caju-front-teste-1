@@ -1,6 +1,6 @@
 import TextField from '~/components/TextField'
 import * as S from './styles'
-import { IconButton, Button, AlertDialog } from '~/components'
+import { IconButton, Button, AlertDialog, ButtonSmall } from '~/components'
 import { HiOutlineArrowLeft } from 'react-icons/hi'
 import { useHistory } from 'react-router-dom'
 import routes from '~/router/routes'
@@ -25,6 +25,7 @@ export const NewUserPage = () => {
     formState: { errors, isValid },
     watch,
     setValue,
+    trigger,
   } = useForm<FormData>({ resolver: zodResolver(schema) })
 
   const goToHome = () => {
@@ -62,13 +63,24 @@ export const NewUserPage = () => {
     })
   }
 
+  const handleOpenAlert = () => {
+    if (isValid) {
+      setIsAlertOpen(true)
+    }
+    trigger()
+  }
+
+  const handleCloseAlert = () => {
+    setIsAlertOpen(false)
+  }
+
   return (
     <S.Container>
       <S.Card>
         <IconButton onClick={() => goToHome()} aria-label="back">
           <HiOutlineArrowLeft size={24} />
         </IconButton>
-        <S.Form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <S.Form noValidate>
           <TextField
             placeholder="Nome"
             label="Nome"
@@ -94,12 +106,9 @@ export const NewUserPage = () => {
             error={errors.date?.message}
             {...register('date')}
           />
-          <AlertDialog.Root open={isAlertOpen} onOpenChange={setIsAlertOpen}>
+          <AlertDialog.Root open={isAlertOpen && isValid}>
             <AlertDialog.Trigger asChild>
-              <Button
-                disabled={isPending || !isValid}
-                onClick={() => setIsAlertOpen(true)}
-              >
+              <Button disabled={isPending} onClick={handleOpenAlert}>
                 {isPending ? 'Carregando...' : 'Cadastrar'}
               </Button>
             </AlertDialog.Trigger>
@@ -108,14 +117,27 @@ export const NewUserPage = () => {
               <AlertDialog.Content>
                 <AlertDialog.Title>Você tem certeza ?</AlertDialog.Title>
                 <AlertDialog.Description>
-                  Essa ação vai adicionar um novo usúario
+                  Essa ação vai adicionar um novo usúario.
                 </AlertDialog.Description>
                 <S.buttonContainer>
                   <AlertDialog.Cancel asChild>
-                    <button>Cancelar</button>
+                    <ButtonSmall
+                      height="32px"
+                      bgcolor="#FF919A"
+                      onClick={handleCloseAlert}
+                    >
+                      Cancelar
+                    </ButtonSmall>
                   </AlertDialog.Cancel>
                   <AlertDialog.Action asChild>
-                    <button>Confirmar</button>
+                    <ButtonSmall
+                      type="submit"
+                      height="32px"
+                      bgcolor="#64a98c"
+                      onClick={handleSubmit(onSubmit)}
+                    >
+                      Confirmar
+                    </ButtonSmall>
                   </AlertDialog.Action>
                 </S.buttonContainer>
               </AlertDialog.Content>

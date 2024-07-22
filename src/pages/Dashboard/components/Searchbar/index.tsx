@@ -5,13 +5,14 @@ import { IconButton, Button } from '~/components'
 import TextField from '~/components/TextField'
 import routes from '~/router/routes'
 import * as S from './styles'
+import { maskCpf } from '~/utils'
 
 type Props = {
-  handleSearch: (search: string) => void
+  handleSearch: (value: string) => void
   search: string
 }
 
-export const SearchBar = ({ handleSearch }: Props) => {
+export const SearchBar = ({ handleSearch, search }: Props) => {
   const history = useHistory()
 
   const goToNewAdmissionPage = () => {
@@ -22,7 +23,8 @@ export const SearchBar = ({ handleSearch }: Props) => {
     <S.Container>
       <TextField
         placeholder="Digite um CPF válido"
-        onChange={(e) => handleSearch(e.target.value)}
+        value={search}
+        onChange={(e) => handleSearch(maskCpf(e.target.value))}
       />
       <S.Actions>
         <IconButton aria-label="refetch">

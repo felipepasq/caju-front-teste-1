@@ -1,17 +1,25 @@
 import Columns from './components/Columns'
 import * as S from './styles'
 import { SearchBar } from './components/Searchbar'
-import { maskCpf } from '~/utils'
-import { useGetRegistrations } from '~/hooks'
+import { useGetRegistrations, useSearchParams } from '~/hooks'
+import { maskCpf, removeCpfMask } from '~/utils'
 import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 export const DashboardPage = () => {
-  const [search, setSearch] = useState('')
-  const { registrations } = useGetRegistrations(search)
+  const { searchParam } = useSearchParams()
+  const { replace } = useHistory()
+  const [search, setSearch] = useState(maskCpf(searchParam))
+  const { registrations } = useGetRegistrations()
 
-  const handleSearch = (search: string) => {
-    if (search.length === 11 || search.length === 0) {
-      setSearch(maskCpf(search))
+  const handleSearch = (value: string) => {
+    let url = '/dashboard'
+    setSearch(value)
+    if (value === '' || value.length === 14) {
+      if (value.length === 14) {
+        url += `?search=${removeCpfMask(value)}`
+      }
+      replace(url)
     }
   }
 

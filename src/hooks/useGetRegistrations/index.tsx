@@ -1,10 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import { getRegistrations } from '~/services'
+import { useSearchParams } from '../useSearchParams'
 
-export const useGetRegistrations = (search: string) => {
-  const { data: registrations } = useQuery({
-    queryKey: ['registrations', search],
-    queryFn: () => getRegistrations(search),
+export const useGetRegistrations = () => {
+  const { searchParam } = useSearchParams()
+
+  const { data: registrations, refetch } = useQuery({
+    queryKey: ['registrations', searchParam],
+    queryFn: () => getRegistrations(searchParam),
     refetchOnWindowFocus: false,
     refetchInterval: Infinity,
     refetchOnMount: false,
@@ -13,5 +16,6 @@ export const useGetRegistrations = (search: string) => {
 
   return {
     registrations,
+    refetch,
   }
 }
