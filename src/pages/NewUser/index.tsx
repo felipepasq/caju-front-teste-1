@@ -40,6 +40,7 @@ export const NewUserPage = () => {
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const { cpf, date, email, name } = data
+    setIsAlertOpen(false)
     postMutateRegistration({
       id: uuidv4(),
       employeeName: name,

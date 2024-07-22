@@ -5,7 +5,7 @@ import { RegistrationStatus } from '~/types'
 
 export const usePatchRegistration = () => {
   const queryClient = useQueryClient()
-  const { mutate: patchRegistrationMutate, isPending: isUpdating } =
+  const { mutate: patchRegistrationMutate, isPending: isPatching } =
     useMutation({
       mutationFn: ({
         id,
@@ -28,5 +28,5 @@ export const usePatchRegistration = () => {
       },
     })
 
-  return { patchRegistrationMutate, isUpdating }
+  return { patchRegistrationMutate, isPatching }
 }

@@ -10,7 +10,8 @@ export const DashboardPage = () => {
   const { searchParam } = useSearchParams()
   const { replace } = useHistory()
   const [search, setSearch] = useState(maskCpf(searchParam))
-  const { registrations } = useGetRegistrations()
+  const { registrations, isLoadingRegistrations, isFetchingRegistrations } =
+    useGetRegistrations()
 
   const handleSearch = (value: string) => {
     let url = '/dashboard'
@@ -26,7 +27,12 @@ export const DashboardPage = () => {
   return (
     <S.Container>
       <SearchBar handleSearch={handleSearch} search={search} />
-      <Columns registrations={registrations} />
+      <Columns
+        registrations={registrations}
+        isLoadingRegistrations={
+          isLoadingRegistrations || isFetchingRegistrations
+        }
+      />
     </S.Container>
   )
 }

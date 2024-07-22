@@ -9,6 +9,7 @@ import {
 import { TRegistration, RegistrationStatus } from '~/types'
 import { ReactNode, useState } from 'react'
 import { useDeleteRegistration, usePatchRegistration } from '~/hooks'
+import { CardSkeleton } from '../CardSkeleton'
 
 type Props = {
   registration: TRegistration
@@ -19,8 +20,8 @@ const RegistrationCard = ({ registration }: Props) => {
     isOpen: boolean
     type?: RegistrationStatus | 'DELETE'
   }>({ isOpen: false, type: undefined })
-  const { patchRegistrationMutate } = usePatchRegistration()
-  const { deleteRegistrationMutate } = useDeleteRegistration()
+  const { patchRegistrationMutate, isPatching } = usePatchRegistration()
+  const { deleteRegistrationMutate, isDeleting } = useDeleteRegistration()
   const handleCloseAlert = () => {
     setAlert({ ...alert, isOpen: false })
   }
@@ -75,6 +76,7 @@ const RegistrationCard = ({ registration }: Props) => {
   }
 
   const handleClick = () => {
+    setAlert({ isOpen: false, type: undefined })
     if (alert.type === 'DELETE') {
       deleteRegistrationMutate({ id: registration.id })
     } else if (alert.type) {
@@ -82,7 +84,9 @@ const RegistrationCard = ({ registration }: Props) => {
     }
   }
 
-  return (
+  return isDeleting || isPatching ? (
+    <CardSkeleton />
+  ) : (
     <S.Card>
       <S.IconAndText>
         <HiOutlineUser />

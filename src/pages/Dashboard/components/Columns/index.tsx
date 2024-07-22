@@ -1,6 +1,7 @@
 import * as S from './styles'
 import RegistrationCard from '../RegistrationCard'
 import { TRegistration, RegistrationStatus } from '~/types'
+import { CardSkeleton } from '../CardSkeleton'
 
 const allColumns = [
   { status: RegistrationStatus.REVIEW, title: 'Pronto para revisar' },
@@ -10,8 +11,9 @@ const allColumns = [
 
 type Props = {
   registrations?: TRegistration[]
+  isLoadingRegistrations: boolean
 }
-const Columns = ({ registrations }: Props) => {
+const Columns = ({ registrations, isLoadingRegistrations }: Props) => {
   return (
     <S.Container>
       {allColumns.map((column) => {
@@ -22,14 +24,21 @@ const Columns = ({ registrations }: Props) => {
                 {column.title}
               </S.TitleColumn>
               <S.ColumnContent>
-                {registrations?.map(
-                  (registration) =>
-                    registration.status === column.status && (
-                      <RegistrationCard
-                        registration={registration}
-                        key={registration.id}
-                      />
-                    ),
+                {isLoadingRegistrations ? (
+                  <>
+                    <CardSkeleton />
+                    <CardSkeleton />
+                  </>
+                ) : (
+                  registrations?.map(
+                    (registration) =>
+                      registration.status === column.status && (
+                        <RegistrationCard
+                          registration={registration}
+                          key={registration.id}
+                        />
+                      ),
+                  )
                 )}
               </S.ColumnContent>
             </>

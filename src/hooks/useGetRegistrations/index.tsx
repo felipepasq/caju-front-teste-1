@@ -10,6 +10,8 @@ export const useGetRegistrations = () => {
     data: registrations,
     refetch,
     isError,
+    isLoading: isLoadingRegistrations,
+    isFetching: isFetchingRegistrations,
   } = useQuery({
     queryKey: ['registrations', searchParam],
     queryFn: () => getRegistrations(searchParam),
@@ -26,5 +28,7 @@ export const useGetRegistrations = () => {
   return {
     registrations,
     refetch,
+    isLoadingRegistrations,
+    isFetchingRegistrations,
   }
 }

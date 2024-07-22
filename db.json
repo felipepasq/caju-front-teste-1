@@ -4,7 +4,7 @@
       "admissionDate": "22/10/2023",
       "email": "luiz@caju.com.br",
       "employeeName": "Luiz Filho",
-      "status": "APPROVED",
+      "status": "REVIEW",
       "cpf": "56642105087",
       "id": "3"
     },
@@ -13,7 +13,7 @@
       "admissionDate": "22/10/2023",
       "email": "jose@caju.com.br",
       "employeeName": "José Leão",
-      "status": "REPROVED",
+      "status": "REVIEW",
       "cpf": "78502270001"
     },
     {
@@ -22,13 +22,37 @@
       "email": "arqgen@arqgen.com.br",
       "cpf": "14991091640",
       "admissionDate": "01/07/2024",
-      "status": "REVIEW"
+      "status": "REPROVED"
     },
     {
       "id": "e5671462-d34a-4d31-8c27-4cf3c08abd32",
       "employeeName": "Felipe Pasqua",
       "email": "felipepasqua2011@hotmail.com",
       "cpf": "81787694682",
+      "admissionDate": "30/06/2024",
+      "status": "APPROVED"
+    },
+    {
+      "id": "90349c33-96cb-435f-b431-6a04a6b4c377",
+      "employeeName": "Felipe Pasqua Rodrigues",
+      "email": "felipe.pasqua@arqgen.com.br",
+      "cpf": "14991091640",
+      "admissionDate": "01/07/2024",
+      "status": "APPROVED"
+    },
+    {
+      "id": "bb479aec-edea-470b-b610-c3daa770b293",
+      "employeeName": "Felipe Pasqua Rodrigues",
+      "email": "felipe.pasqua@arqgen.com.br",
+      "cpf": "14991091640",
+      "admissionDate": "10/07/2024",
+      "status": "APPROVED"
+    },
+    {
+      "id": "2019d2a5-6129-46df-9c32-d12dc10ed5ae",
+      "employeeName": "Felipe Pasqua Rodrigues",
+      "email": "felipe.pasqua@arqgen.com.br",
+      "cpf": "14991091640",
       "admissionDate": "30/06/2024",
       "status": "REVIEW"
     }
