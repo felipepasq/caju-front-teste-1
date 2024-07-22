@@ -1,7 +1,7 @@
 import { AlertDialog } from '.'
 import { fireEvent, render, screen } from '@testing-library/react'
 describe('AlertDialog', () => {
-  it('should render and open properly', () => {
+  it('Should render and open properly', () => {
     render(
       <AlertDialog.Root>
         <AlertDialog.Trigger asChild>
