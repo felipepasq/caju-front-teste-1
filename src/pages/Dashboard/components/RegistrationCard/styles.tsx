@@ -35,3 +35,14 @@ export const Actions = styled.div`
     cursor: pointer;
   }
 `
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 24px;
+
+  & > button {
+    font-weight: 700;
+    font-size: 14px;
+  }
+`

@@ -10,7 +10,7 @@ import { FormData, schema } from './schema'
 import { useEffect, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { postRegistration } from '~/services'
-import { TRegistration } from '~/types'
+import { TRegistration, RegistrationStatus } from '~/types'
 import { maskCpf, removeCpfMask } from '~/utils'
 import { v4 as uuidv4 } from 'uuid'
 import { format } from 'date-fns'
@@ -59,7 +59,7 @@ export const NewUserPage = () => {
       email,
       cpf: removeCpfMask(cpf),
       admissionDate: format(date, 'dd/MM/yyyy'),
-      status: 'REVIEW',
+      status: RegistrationStatus.REVIEW,
     })
   }
 
@@ -119,7 +119,7 @@ export const NewUserPage = () => {
                 <AlertDialog.Description>
                   Essa ação vai adicionar um novo usúario.
                 </AlertDialog.Description>
-                <S.buttonContainer>
+                <S.ButtonContainer>
                   <AlertDialog.Cancel asChild>
                     <ButtonSmall
                       height="32px"
@@ -139,7 +139,7 @@ export const NewUserPage = () => {
                       Confirmar
                     </ButtonSmall>
                   </AlertDialog.Action>
-                </S.buttonContainer>
+                </S.ButtonContainer>
               </AlertDialog.Content>
             </AlertDialog.Portal>
           </AlertDialog.Root>

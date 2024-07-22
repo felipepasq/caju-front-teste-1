@@ -39,7 +39,7 @@ export const Card = styled.div`
   }
 `
 
-export const buttonContainer = styled.div`
+export const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 24px;

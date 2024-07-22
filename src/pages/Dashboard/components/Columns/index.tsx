@@ -1,11 +1,11 @@
 import * as S from './styles'
 import RegistrationCard from '../RegistrationCard'
-import { TRegistration } from '~/types'
+import { TRegistration, RegistrationStatus } from '~/types'
 
 const allColumns = [
-  { status: 'REVIEW', title: 'Pronto para revisar' },
-  { status: 'APPROVED', title: 'Aprovado' },
-  { status: 'REPROVED', title: 'Reprovado' },
+  { status: RegistrationStatus.REVIEW, title: 'Pronto para revisar' },
+  { status: RegistrationStatus.APPROVED, title: 'Aprovado' },
+  { status: RegistrationStatus.REPROVED, title: 'Reprovado' },
 ]
 
 type Props = {
