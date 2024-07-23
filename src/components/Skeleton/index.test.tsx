@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { Skeleton } from '.'
 describe('Skeleton', () => {
-  it('Should render IconButton properly', () => {
+  it('Should render Skeleton properly', () => {
     render(
       <Skeleton height="20px" width="20px" data-testid="skeleton-element" />,
     )
