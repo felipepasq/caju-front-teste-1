@@ -11,6 +11,10 @@ jest.mock('react-router-dom', () => ({
 }))
 
 describe('SearchBar', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   it('Should render properly', () => {
     const mockFn = jest.fn()
     queryRender(<SearchBar search="teste" handleSearch={mockFn} />)

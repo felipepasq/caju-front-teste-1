@@ -102,7 +102,10 @@ const RegistrationCard = ({ registration }: Props) => {
       </S.IconAndText>
       <S.Actions>
         {registrationButtonMap[registration.status]}
-        <HiOutlineTrash onClick={() => handleOpenAlert('DELETE')} />
+        <HiOutlineTrash
+          data-testid="btn-delete"
+          onClick={() => handleOpenAlert('DELETE')}
+        />
       </S.Actions>
       <AlertDialog.Root open={alert.isOpen}>
         <AlertDialog.Portal>

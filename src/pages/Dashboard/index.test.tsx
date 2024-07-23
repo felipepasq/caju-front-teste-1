@@ -21,6 +21,10 @@ jest.mock('react-toastify', () => ({
 }))
 
 describe('Dashboard', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   it('Should render properly', () => {
     queryRender(<DashboardPage />)
     const text = screen.getByText('Pronto para revisar')
