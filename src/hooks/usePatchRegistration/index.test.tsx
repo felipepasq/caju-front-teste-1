@@ -45,6 +45,9 @@ describe('usePatchRegistration', () => {
       await new Promise((resolve) => setTimeout(resolve, 0))
     })
     expect(patchRegistration).toHaveBeenCalledWith('123', 'REVIEW')
+    expect(toast.success).toHaveBeenCalledWith(
+      'Estado do usuário atualizado com sucesso!',
+    )
   })
   it('Should handle error when patching registration', async () => {
     const wrapper = ({ children }: { children: ReactNode }) => (
