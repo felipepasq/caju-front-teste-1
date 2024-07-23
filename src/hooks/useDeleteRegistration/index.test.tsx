@@ -48,13 +48,13 @@ describe('useDeleteRegistration', () => {
     const wrapper = ({ children }: { children: ReactNode }) => (
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     )
+    mockDelete.mockRejectedValueOnce(new Error('Error deleting user'))
     const { result } = renderHook(() => useDeleteRegistration(), { wrapper })
 
     act(() => {
       result.current.deleteRegistrationMutate({ id: '123' })
     })
 
-    mockDelete.mockRejectedValueOnce(new Error('Error deleting user'))
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0))
     })

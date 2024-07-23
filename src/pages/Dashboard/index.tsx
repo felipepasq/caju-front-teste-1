@@ -5,13 +5,22 @@ import { useGetRegistrations, useSearchParams } from '~/hooks'
 import { maskCpf, removeCpfMask } from '~/utils'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export const DashboardPage = () => {
   const { searchParam } = useSearchParams()
   const { replace } = useHistory()
   const [search, setSearch] = useState(maskCpf(searchParam))
-  const { registrations, isLoadingRegistrations, isFetchingRegistrations } =
-    useGetRegistrations()
+  const {
+    registrations,
+    isLoadingRegistrations,
+    isFetchingRegistrations,
+    isError,
+  } = useGetRegistrations()
+
+  if (isError) {
+    toast.error('Ocorreu um erro ao carregar os registros.')
+  }
 
   const handleSearch = (value: string) => {
     let url = '/dashboard'
