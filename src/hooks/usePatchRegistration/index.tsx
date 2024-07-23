@@ -17,11 +17,11 @@ export const usePatchRegistration = () => {
         return patchRegistration(id, status)
       },
       onSuccess: () => {
+        toast.success('Estado do usuário atualizado com sucesso!')
         queryClient.invalidateQueries({
           queryKey: ['registrations'],
           refetchType: 'all',
         })
-        toast.success('Estado do usuário atualizado com sucesso!')
       },
       onError: () => {
         toast.error('Erro ao atualizar estado do usuário.')

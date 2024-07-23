@@ -1,9 +1,10 @@
 import { renderHook, act } from '@testing-library/react-hooks'
-import { useDeleteRegistration } from '.'
-import { deleteRegistration } from '~/services'
+import { usePatchRegistration } from '.'
+import { patchRegistration } from '~/services'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 import { ReactNode } from 'react'
+import { RegistrationStatus } from '~/types'
 
 jest.mock('react-toastify', () => ({
   toast: {
@@ -18,49 +19,54 @@ jest.mock('@tanstack/react-query', () => ({
 }))
 
 jest.mock('~/services', () => ({
-  deleteRegistration: jest.fn(),
+  patchRegistration: jest.fn(),
 }))
 
-const mockDelete = deleteRegistration as jest.Mock
+const mockPatch = patchRegistration as jest.Mock
 
-describe('useDeleteRegistration', () => {
+describe('usePatchRegistration', () => {
   const queryClient = new QueryClient()
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
-  it('Should delete registration successfully', async () => {
+  it('Should patch registration successfully', async () => {
     const wrapper = ({ children }: { children: ReactNode }) => (
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     )
-    const { result } = renderHook(() => useDeleteRegistration(), { wrapper })
+    const { result } = renderHook(() => usePatchRegistration(), { wrapper })
     act(() => {
-      result.current.deleteRegistrationMutate({ id: '123' })
+      result.current.patchRegistrationMutate({
+        id: '123',
+        status: RegistrationStatus.REVIEW,
+      })
     })
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0))
     })
-    expect(deleteRegistration).toHaveBeenCalledWith('123')
-    expect(toast.success).toHaveBeenCalledWith('Usuário deletado com sucesso!')
+    expect(patchRegistration).toHaveBeenCalledWith('123', 'REVIEW')
   })
-  it('Should handle error when deleting registration', async () => {
+  it('Should handle error when patching registration', async () => {
     const wrapper = ({ children }: { children: ReactNode }) => (
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     )
-    mockDelete.mockRejectedValueOnce(new Error('Error deleting user'))
-    const { result } = renderHook(() => useDeleteRegistration(), { wrapper })
+    mockPatch.mockRejectedValueOnce(new Error('Error deleting user'))
+    const { result } = renderHook(() => usePatchRegistration(), { wrapper })
 
     act(() => {
-      result.current.deleteRegistrationMutate({ id: '123' })
+      result.current.patchRegistrationMutate({
+        id: '123',
+        status: RegistrationStatus.REVIEW,
+      })
     })
 
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0))
     })
 
-    expect(deleteRegistration).toHaveBeenCalledWith('123')
+    expect(patchRegistration).toHaveBeenCalledWith('123', 'REVIEW')
     expect(toast.error).toHaveBeenCalledWith(
-      'Ocorreu um erro ao deletar o usuário',
+      'Erro ao atualizar estado do usuário.',
     )
   })
 })
