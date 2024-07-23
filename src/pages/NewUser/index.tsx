@@ -12,7 +12,7 @@ import { RegistrationStatus } from '~/types'
 import { maskCpf, removeCpfMask } from '~/utils'
 import { v4 as uuidv4 } from 'uuid'
 import { format } from 'date-fns'
-import { usePostRegistration } from '~/hooks/usePostRegistration'
+import { usePostRegistration } from '~/hooks'
 
 export const NewUserPage = () => {
   const history = useHistory()
@@ -25,7 +25,6 @@ export const NewUserPage = () => {
     formState: { errors, isValid },
     watch,
     setValue,
-    trigger,
   } = useForm<FormData>({ resolver: zodResolver(schema), mode: 'onChange' })
 
   const goToHome = () => {
@@ -40,22 +39,26 @@ export const NewUserPage = () => {
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const { cpf, date, email, name } = data
+
+    const localDate = new Date(date)
+    const adjustedTimeZoneDate = new Date(
+      localDate.getUTCFullYear(),
+      localDate.getUTCMonth(),
+      localDate.getUTCDate(),
+    )
     setIsAlertOpen(false)
     postMutateRegistration({
       id: uuidv4(),
       employeeName: name,
       email,
       cpf: removeCpfMask(cpf),
-      admissionDate: format(date, 'dd/MM/yyyy'),
+      admissionDate: format(adjustedTimeZoneDate, 'dd/MM/yyyy'),
       status: RegistrationStatus.REVIEW,
     })
   }
 
   const handleOpenAlert = () => {
-    if (isValid) {
-      setIsAlertOpen(true)
-    }
-    trigger()
+    setIsAlertOpen(true)
   }
 
   const handleCloseAlert = () => {
@@ -92,16 +95,20 @@ export const NewUserPage = () => {
             label="Data de admissão"
             type="date"
             error={errors.date?.message}
+            data-testid="input-date"
             {...register('date')}
           />
           <AlertDialog.Root open={isAlertOpen && isValid}>
             <AlertDialog.Trigger asChild>
-              <Button disabled={isPosting} onClick={handleOpenAlert}>
+              <Button
+                disabled={isPosting || !isValid}
+                onClick={handleOpenAlert}
+              >
                 {isPosting ? 'Carregando...' : 'Cadastrar'}
               </Button>
             </AlertDialog.Trigger>
             <AlertDialog.Portal>
-              <AlertDialog.Overlay />
+              <AlertDialog.Overlay onClick={handleCloseAlert} />
               <AlertDialog.Content>
                 <AlertDialog.Title>Você tem certeza ?</AlertDialog.Title>
                 <AlertDialog.Description>
