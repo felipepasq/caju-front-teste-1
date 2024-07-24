@@ -1,8 +1,9 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderHook } from '@testing-library/react-hooks'
-import { act, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { useGetRegistrations } from '.'
 import { getRegistrations } from '~/services'
+import { waitFor } from '@testing-library/react'
 
 jest.mock('~/services', () => ({
   getRegistrations: jest.fn(),
@@ -54,9 +55,8 @@ describe('useGetRegistrations', () => {
     mockGetRegistrations.mockResolvedValueOnce(mockRegistrations)
     const { result } = renderHook(() => useGetRegistrations(), { wrapper })
 
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0))
+    await waitFor(() => {
+      expect(result.current.registrations).toBe(mockRegistrations)
     })
-    expect(result.current.registrations).toBe(mockRegistrations)
   })
 })
