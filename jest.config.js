@@ -21,4 +21,12 @@ export default {
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'html'],
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '/src/services',
+    '/src/App.tsx',
+    '/src/main.tsx',
+    '/src/pages/index.tsx',
+    '/src/router/index.tsx',
+  ],
 }
