@@ -93,7 +93,7 @@ Além disso foi adicionado também um novo script de teste para ser rodado duran
 
 ## Deploy CI/CD
 
-Além disso o desafio também conta com deploy automatizado que roda todos os testes dentro da aplicação antes de realizar o deploy da aplicação na [Vercel](https://vercel.com/).  Apesar da aplicação estar sem funcionamento por conta de ausência de servidor é possivel acessar a mesma através do link [Caju teste](https://caju-front-teste-1-1xbj9m7ci-felipepasqs-projects.vercel.app/#/dashboard).
+Além disso o desafio também conta com deploy automatizado que roda todos os testes dentro da aplicação antes de realizar o deploy na [Vercel](https://vercel.com/).  Apesar da aplicação estar sem funcionamento por conta de ausência de servidor é possível acessar a mesma através do link [Caju teste](https://caju-front-teste-1-1xbj9m7ci-felipepasqs-projects.vercel.app/#/dashboard).
 
 ![Deploy](https://github.com/felipepasq/caju-front-teste-1/blob/main/public/assets/deploy_1.png)
 
@@ -143,7 +143,7 @@ yarn  test:dev
 
 ```
 
-Se tudo tiver dado certo as seguintes portas estarão disponiveis:
+Se tudo tiver dado certo as seguintes portas estarão disponíveis:
 
 <br/>
 
