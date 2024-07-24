@@ -83,7 +83,7 @@ Esse é um teste técnico para a vaga de Desenvolvedor Front End Sênior para a 
 ```
  ## Testes
  O projeto apresenta alta cobertura de testes sendo os mesmos tanto unitários como de integração.
- ![Testes](https://github.com/felipepasq/caju-front-teste-1/public/assets/teste.png)
+ ![Testes](https://github.com/felipepasq/caju-front-teste-1/blob/main/public/assets/testes.png)
 Além disso foi adicionado também um novo script de teste para ser rodado durante a pipeline.
 ```
 "test:prod":  "jest --coverage --no-watchAll"
@@ -91,9 +91,9 @@ Além disso foi adicionado também um novo script de teste para ser rodado duran
 
 ## Deploy CI/CD
 Além disso o desafio também conta com deploy automatizado que roda todos os testes dentro da aplicação antes de realizar o deploy da aplicação na [Vercel](https://vercel.com/).  Apesar da aplicação estar sem funcionamento por conta de ausência de servidor é possivel acessar a mesma através do link [Caju teste](https://caju-front-teste-1-1xbj9m7ci-felipepasqs-projects.vercel.app/#/dashboard).
-![Deploy](https://github.com/felipepasq/caju-front-teste-1/public/assets/deploy_1.png)
+![Deploy](https://github.com/felipepasq/caju-front-teste-1/blob/main/public/assets/deploy_1.png)
 
-![Deploy](https://github.com/felipepasq/caju-front-teste-1/public/assets/deploy_2.png)
+![Deploy](https://github.com/felipepasq/caju-front-teste-1/blob/main/public/assets/deploy_2.png)
 
 
 
