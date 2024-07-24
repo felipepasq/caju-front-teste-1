@@ -17,10 +17,12 @@ jest.mock('@tanstack/react-query', () => ({
   ...jest.requireActual('@tanstack/react-query'),
   useQueryClient: jest.fn(),
 }))
-
+const mockPush = jest.fn()
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn(),
+  useLocation: jest.fn().mockReturnValue({ search: undefined }),
+  useHistory: () => ({
+    push: mockPush,
+  }),
 }))
 
 jest.mock('~/services', () => ({
@@ -45,7 +47,7 @@ describe('usePatchRegistration', () => {
         id: '123',
         employeeName: 'teste final',
         email: 'felipe@gmail.com.br',
-        cpf: '14991091640',
+        cpf: '54986738097',
         admissionDate: '01/07/2024',
         status: RegistrationStatus.REPROVED,
       })
@@ -57,7 +59,7 @@ describe('usePatchRegistration', () => {
       id: '123',
       employeeName: 'teste final',
       email: 'felipe@gmail.com.br',
-      cpf: '14991091640',
+      cpf: '54986738097',
       admissionDate: '01/07/2024',
       status: RegistrationStatus.REPROVED,
     })
@@ -77,7 +79,7 @@ describe('usePatchRegistration', () => {
         id: '123',
         employeeName: 'teste final',
         email: 'felipe@gmail.com.br',
-        cpf: '14991091640',
+        cpf: '54986738097',
         admissionDate: '01/07/2024',
         status: RegistrationStatus.REPROVED,
       })
@@ -91,7 +93,7 @@ describe('usePatchRegistration', () => {
       id: '123',
       employeeName: 'teste final',
       email: 'felipe@gmail.com.br',
-      cpf: '14991091640',
+      cpf: '54986738097',
       admissionDate: '01/07/2024',
       status: RegistrationStatus.REPROVED,
     })

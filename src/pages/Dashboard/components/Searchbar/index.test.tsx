@@ -27,7 +27,7 @@ describe('SearchBar', () => {
     const input = screen.getByPlaceholderText(
       'Digite um CPF válido',
     ) as HTMLInputElement
-    fireEvent.change(input, { target: { value: '14991091640' } })
+    fireEvent.change(input, { target: { value: '54986738097' } })
     expect(mockFn).toHaveBeenCalled()
   })
 

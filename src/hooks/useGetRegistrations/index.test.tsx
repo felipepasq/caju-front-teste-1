@@ -33,7 +33,7 @@ const mockRegistrations = {
     {
       id: '88bc12e5-0b26-4150-83a6-7c72f9981f38',
       employeeName: 'teste final',
-      email: 'arqgen@arqgen.com.br',
+      email: 'teste@gmail.com',
       cpf: '14991091640',
       admissionDate: '01/07/2024',
       status: 'REPROVED',

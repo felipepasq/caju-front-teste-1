@@ -1,11 +1,14 @@
 import { queryRender } from '~/utils'
 import { DashboardPage } from '.'
-import { screen } from '@testing-library/react'
+import { fireEvent, screen } from '@testing-library/react'
 import { toast } from 'react-toastify'
 
+const mockReplace = jest.fn()
 jest.mock('react-router-dom', () => ({
   useLocation: jest.fn().mockReturnValue({ search: undefined }),
-  useHistory: jest.fn().mockReturnValue({ replace: jest.fn() }),
+  useHistory: () => ({
+    replace: mockReplace,
+  }),
 }))
 
 jest.mock('~/hooks', () => ({
@@ -37,5 +40,15 @@ describe('Dashboard', () => {
     expect(toast.error).toHaveBeenCalledWith(
       'Ocorreu um erro ao carregar os registros.',
     )
+  })
+
+  it('Should call replace', () => {
+    queryRender(<DashboardPage />)
+
+    const input = screen.getByPlaceholderText('Digite um CPF válido')
+    expect(input).toBeVisible()
+
+    fireEvent.change(input, { target: { value: '54986738097' } })
+    expect(mockReplace).toHaveBeenCalled()
   })
 })

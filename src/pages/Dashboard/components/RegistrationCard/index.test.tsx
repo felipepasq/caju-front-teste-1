@@ -5,14 +5,16 @@ import { fireEvent, screen } from '@testing-library/react'
 
 const mockPatchRegistrationMutate = jest.fn()
 const mockDeleteRegistrationMutate = jest.fn()
-const mockIsDeleting = jest.fn().mockReturnValue(() => false)
-
+let mockIsDeleting = false
+let mockIsPatching = false
 jest.mock('~/hooks', () => ({
   usePatchRegistration: () => ({
     patchRegistrationMutate: mockPatchRegistrationMutate,
+    isPatching: mockIsPatching,
   }),
   useDeleteRegistration: () => ({
     deleteRegistrationMutate: mockDeleteRegistrationMutate,
+    isDeleting: mockIsDeleting,
   }),
 }))
 
@@ -126,5 +128,13 @@ describe('RegistrationCard', () => {
       'Essa ação vai reprovar o usuário Filipe Marins.',
     )
     expect(text).toBeVisible()
+  })
+
+  it('Should be loading', () => {
+    mockIsDeleting = true
+    mockIsPatching = true
+    queryRender(<RegistrationCard registration={mockRegistrationReview} />)
+    const text = screen.queryByText('Filipe Marins')
+    expect(text).toBeNull()
   })
 })

@@ -34,14 +34,6 @@ describe('NewUser', () => {
     expect(label).toBeInTheDocument()
   })
 
-  it('Should render button loading', () => {
-    mockIsPosting = true
-    queryRender(<NewUserPage />)
-    const button = screen.getByText('Carregando...')
-    expect(button).toBeInTheDocument()
-    mockIsPosting = false
-  })
-
   it('Should go to dashboard', () => {
     queryRender(<NewUserPage />)
     const button = screen.getAllByRole('button')[0]
@@ -74,7 +66,7 @@ describe('NewUser', () => {
   it('Should show error on cpf validation', async () => {
     queryRender(<NewUserPage />)
     const input = screen.getByPlaceholderText('CPF') as HTMLInputElement
-    fireEvent.change(input, { target: { value: '149.910.913-33' } })
+    fireEvent.change(input, { target: { value: '615.357.610-35' } })
     await waitFor(() => {
       const validationText = screen.getByText('Digite um CPF válido.')
       expect(validationText).toBeInTheDocument()
@@ -113,7 +105,7 @@ describe('NewUser', () => {
 
     const nameInput = screen.getByPlaceholderText('Nome')
     const emailInput = screen.getByPlaceholderText('Email')
-    const cpfInput = screen.getByPlaceholderText('CPF') as HTMLInputElement
+    const cpfInput = screen.getByPlaceholderText('CPF')
     const dateInput = screen.getByTestId('input-date')
     fireEvent.change(nameInput, { target: { value: 'Felipe Pasqua' } })
     fireEvent.change(emailInput, { target: { value: 'felipe2024@gmail.com' } })
@@ -145,5 +137,28 @@ describe('NewUser', () => {
       status: 'REVIEW',
       cpf: '36566110097',
     })
+  })
+
+  it('Should not change value of input', () => {
+    mockIsPosting = true
+    queryRender(<NewUserPage />)
+    const cpfInput = screen.getByPlaceholderText('CPF')
+    fireEvent.change(cpfInput, { target: { value: 123 } })
+    expect(screen.queryByText(123)).toBeNull()
+  })
+
+  it('Should not accept string as date', () => {
+    mockIsPosting = true
+    queryRender(<NewUserPage />)
+    const dateInput = screen.getByTestId('input-date')
+    fireEvent.change(dateInput, { target: { value: '123' } })
+    expect(screen.queryByText(123)).toBeNull()
+  })
+
+  it('Should render button loading', () => {
+    mockIsPosting = true
+    queryRender(<NewUserPage />)
+    const button = screen.getByText('Carregando...')
+    expect(button).toBeInTheDocument()
   })
 })
